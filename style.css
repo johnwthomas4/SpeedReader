@@ -1,0 +1,125 @@
+/* Razor-clean Red & Black RSVP theme
+   - High contrast, minimal chrome
+   - Red ORP focus; subdued neighbors
+   - Tight, confident UI chrome with subtle motion
+*/
+:root{
+  --bg:#0a0a0b;           /* near-black */
+  --panel:#101114;        /* dark panel */
+  --fg:#ededf0;           /* light text */
+  --muted:#9aa0a6;        /* muted text */
+  --border:#1d1f24;       /* hairline */
+  --accent:#e50914;       /* Netflix-crimson red */
+  --accent-600:#bd0810;   /* deeper red for active/pressed */
+  --accent-700:#94060d;
+  --orp:var(--accent);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter, ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial, Apple Color Emoji, Segoe UI Emoji;
+  background:radial-gradient(1200px 800px at 70% -10%, rgba(229,9,20,0.10), transparent 60%), var(--bg);
+  color:var(--fg);
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+
+/* Header */
+.app-header{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:12px 16px;background:rgba(16,17,20,.85);
+  backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:10
+}
+.app-header .left{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.status-line{color:var(--muted);font-size:.95rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:45vw}
+
+/* Buttons + inputs */
+.file-button,.controls button{
+  padding:9px 14px;border-radius:12px;border:1px solid var(--border);
+  background:#0f0f11;color:var(--fg);cursor:pointer;
+  transition:transform .06s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.file-button:hover,.controls button:hover{border-color:#2a2e36;background:#121316}
+.file-button:active,.controls button:active{transform:translateY(1px)}
+.controls button:disabled{opacity:.5;cursor:not-allowed}
+
+.file-button{
+  background:linear-gradient(180deg, #121316, #0f0f11);
+  border-color:#2a2e36;
+}
+.file-button:hover{box-shadow:0 0 0 2px rgba(229,9,20,.15) inset}
+.file-button:focus-visible{outline:2px solid var(--accent)}
+
+.wpm-wrap{display:flex;align-items:center;gap:8px}
+#wpm{width:180px;accent-color:var(--accent)}
+.checkbox{display:flex;align-items:center;gap:6px;color:var(--muted)}
+
+/* Layout */
+.app-main{display:grid;grid-template-columns:260px 1fr;gap:0;min-height:calc(100vh - 58px)}
+.sidebar{
+  border-right:1px solid var(--border);background:linear-gradient(180deg, #101114, #0f0f11);
+  padding:12px;overflow:auto
+}
+.sidebar h2{margin:10px 0 10px;font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:#c9cdd3}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.list li{
+  padding:10px 10px;border-radius:10px;border:1px solid var(--border);
+  background:#0f0f11;cursor:pointer;
+  transition:background .15s ease, border-color .15s ease, transform .06s ease
+}
+.list li:hover{background:#121316;border-color:#2a2e36}
+.list li.active{border-color:var(--accent);box-shadow:0 0 0 1px rgba(229,9,20,.35) inset}
+.list.toc li{font-size:.95rem}
+
+/* Reader */
+.reader{display:flex;flex-direction:column;gap:18px;padding:18px;align-items:center;justify-content:flex-start}
+
+/* Reading box: floating card, subtle glow */
+.rsvp-wrap{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  height:42vh;min-height:300px;width:100%;
+  border-radius:18px;
+  background:linear-gradient(180deg, #0f0f11, #0c0c0e);
+  border:1px solid #16181d;
+  box-shadow:0 12px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(229,9,20,.06) inset;
+}
+
+/* Optional vertical guide—extremely faint red */
+.v-guide{position:absolute;top:10%;bottom:10%;width:1px;background:var(--accent);opacity:.10;left:50%}
+
+/* RSVP word styles */
+.rsvp-word{
+  font-size:64px;line-height:1.02;font-weight:600;letter-spacing:0.005em;
+  text-align:center;
+  text-shadow:0 1px 0 rgba(0,0,0,.4);
+}
+/* ORP: pure red focus, crisp and bright */
+.rsvp-word .orp{color:var(--orp);font-weight:800}
+/* Neighbors slightly desaturated to push focus */
+.rsvp-word .pre,.rsvp-word .post{opacity:.88}
+/* Tight optical spacing around ORP */
+.rsvp-word .pre{margin-right:0.012em}
+.rsvp-word .post{margin-left:0.012em}
+
+/* Progress + stats */
+.progress-wrap{width:100%;max-width:980px}
+.progress-bar{height:10px;background:#0e0e10;border:1px solid #1b1e24;border-radius:999px;overflow:hidden}
+#progressFill{height:100%;width:0%;background:linear-gradient(90deg, var(--accent), var(--accent-600))}
+.stats{display:flex;gap:14px;margin-top:8px;color:#bcc2c9}
+
+/* TTS toggle highlight when enabled */
+input#ttsToggle:checked + span,
+.checkbox input:checked{filter:saturate(1.2)}
+
+/* Responsive */
+@media (max-width:1024px){ .rsvp-word{font-size:56px} }
+@media (max-width:900px){
+  .app-main{grid-template-columns:1fr}
+  .sidebar{order:2}
+  .reader{order:1}
+  .status-line{max-width:100%}
+  .rsvp-word{font-size:48px}
+}

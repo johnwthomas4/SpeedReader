@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local‑First RSVP PDF Reader</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#0b0f14">
+</head>
+<body>
+<header class="app-header">
+  <div class="left">
+    <button id="openBtn" class="file-button">Open PDFs</button>
+    <input id="fileInput" type="file" accept="application/pdf" multiple style="display:none" />
+
+    <div class="wpm-wrap">
+      <label for="wpm">WPM</label>
+      <input id="wpm" type="range" min="120" max="1000" step="10" value="350">
+      <span id="wpmVal">350</span>
+    </div>
+
+    <div class="controls">
+      <button id="startBtn" disabled>Start</button>
+      <button id="pauseBtn" disabled>Pause</button>
+      <button id="resumeBtn" disabled>Resume</button>
+      <label class="checkbox">
+        <input id="ttsToggle" type="checkbox"> TTS
+      </label>
+      <label class="checkbox">
+        <input id="guideToggle" type="checkbox" checked> Guide
+      </label>
+    </div>
+  </div>
+  <div class="right status-line" id="statusLine">Load a PDF to begin, or drag & drop a PDF anywhere.</div>
+</header>
+
+<main class="app-main">
+  <aside class="sidebar">
+    <section>
+      <h2>Documents</h2>
+      <ul id="docList" class="list"></ul>
+    </section>
+    <section>
+      <h2>Chapters</h2>
+      <ul id="tocList" class="list toc"></ul>
+    </section>
+  </aside>
+
+  <section class="reader">
+    <div class="rsvp-wrap">
+      <div id="vGuide" class="v-guide"></div>
+      <div id="rsvpWord" class="rsvp-word">
+        <span class="pre" id="pre"></span><span class="orp" id="orp"></span><span class="post" id="post"></span>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-bar"><div id="progressFill"></div></div>
+      <div class="stats" id="stats">
+        <span id="wordsTotal">0</span> words •
+        <span id="percentRead">0%</span> read •
+        <span id="elapsed">0:00</span> elapsed •
+        <span id="remaining">--:--</span> remaining
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.10.111/build/pdf.min.js"></script>
+<script>
+  // IMPORTANT: Worker URL must match the pdf.js version above.
+  pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.10.111/build/pdf.worker.min.js";
+</script>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
